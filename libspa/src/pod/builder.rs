@@ -512,7 +512,7 @@ impl<'d> Builder<'d> {
 ///         Bytes(<&[u8]>),
 ///     }
 /// );
-/// builder_add(<&mut libspa::pod::builder::Builder>,
+/// builder_add!(<&mut libspa::pod::builder::Builder>,
 ///     Object(
 ///         <type as u32>,
 ///         <id as u32>
