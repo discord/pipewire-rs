@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: MIT
 
 //! The `libspa` crate provides a high-level API to interact with
-//! [libspa](https://gitlab.freedesktop.org/pipewire/pipewire/-/tree/master/doc/spa).
+//! [libspa].
+//!
+//! [libspa]: https://docs.pipewire.org/page_spa.html
 
 pub mod buffer;
 pub mod param;
