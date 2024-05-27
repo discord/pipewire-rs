@@ -17,6 +17,7 @@ use std::{
     io::{Seek, Write},
     mem::MaybeUninit,
     os::fd::RawFd,
+    ptr::addr_of,
 };
 
 use bitflags::bitflags;
@@ -89,7 +90,7 @@ impl Pod {
     }
 
     pub fn as_raw_ptr(&self) -> *mut spa_sys::spa_pod {
-        std::ptr::addr_of!(self.0).cast_mut()
+        addr_of!(self.0).cast_mut()
     }
 
     /// Construct a pod from raw bytes.
@@ -389,9 +390,196 @@ impl Pod {
         res != 0
     }
 
+    // TODO: spa_pod_is_object_type, spa_pod_is_object_id
+
+    pub fn as_object(&self) -> Result<&PodObject, Errno> {
+        if self.is_object() {
+            // Safety: We already know that the pod is valid, and since it is an object, we can
+            //         safely create a PodObject from it
+            Ok(unsafe { PodObject::from_raw(self.as_raw_ptr() as *const spa_sys::spa_pod_object) })
+        } else {
+            Err(Errno::EINVAL)
+        }
+    }
+
     pub fn is_sequence(&self) -> bool {
         let res = unsafe { spa_sys::spa_pod_is_sequence(self.as_raw_ptr()) };
         res != 0
+    }
+}
+
+impl<'p> From<&'p PodObject> for &'p Pod {
+    fn from(value: &'p PodObject) -> Self {
+        value.as_pod()
+    }
+}
+
+/// A transparent wrapper around a `spa_sys::spa_pod_object`.
+#[repr(transparent)]
+pub struct PodObject(spa_sys::spa_pod_object);
+
+impl PodObject {
+    /// # Safety
+    ///
+    /// The provided pointer must point to a valid, well-aligned pod of type object.
+    ///
+    /// All restrictions from [`Pod::from_raw`] also apply here.
+    pub unsafe fn from_raw(pod: *const spa_sys::spa_pod_object) -> &'static Self {
+        pod.cast::<Self>().as_ref().unwrap()
+    }
+
+    /// # Safety
+    ///
+    /// The provided pointer must point to a valid, well-aligned pod of type object.
+    ///
+    /// All restrictions from [`Pod::from_raw_mut`] also apply here.
+    pub unsafe fn from_raw_mut(pod: *mut spa_sys::spa_pod_object) -> &'static mut Self {
+        pod.cast::<Self>().as_mut().unwrap()
+    }
+
+    pub fn as_raw_ptr(&self) -> *mut spa_sys::spa_pod_object {
+        std::ptr::addr_of!(self.0).cast_mut()
+    }
+
+    pub fn as_pod(&self) -> &Pod {
+        // Safety: Since this is a valid spa_pod_object, it must also be a valid spa_pod
+        unsafe { Pod::from_raw(addr_of!(self.0.pod)) }
+    }
+
+    pub fn type_(&self) -> SpaTypes {
+        SpaTypes::from_raw(self.0.body.type_)
+    }
+
+    pub fn id(&self) -> Id {
+        Id(self.0.body.id)
+    }
+
+    pub fn props(&self) -> PodObjectIter<'_> {
+        PodObjectIter::new(self)
+    }
+
+    pub fn find_prop(&self, /* TODO: start, */ key: Id) -> Option<&PodProp> {
+        let prop = unsafe {
+            spa_sys::spa_pod_object_find_prop(self.as_raw_ptr(), std::ptr::null(), key.0)
+        };
+
+        if !prop.is_null() {
+            unsafe { Some(PodProp::from_raw(prop)) }
+        } else {
+            None
+        }
+    }
+
+    pub fn fixate(&mut self) {
+        let _res = unsafe { spa_sys::spa_pod_object_fixate(self.as_raw_ptr()) };
+        // C implementation always returns 0
+    }
+
+    #[cfg(feature = "v0_3_40")]
+    pub fn is_fixated(&self) -> bool {
+        let res = unsafe { spa_sys::spa_pod_object_is_fixated(self.as_raw_ptr()) };
+        res != 0
+    }
+}
+
+impl<'p> TryFrom<&'p Pod> for &'p PodObject {
+    type Error = Errno;
+
+    fn try_from(value: &'p Pod) -> Result<Self, Self::Error> {
+        value.as_object()
+    }
+}
+
+impl AsRef<Pod> for PodObject {
+    fn as_ref(&self) -> &Pod {
+        self.as_pod()
+    }
+}
+
+pub struct PodObjectIter<'o> {
+    object: &'o PodObject,
+    next: *mut spa_sys::spa_pod_prop,
+}
+
+impl<'o> PodObjectIter<'o> {
+    fn new(object: &'o PodObject) -> Self {
+        let first_prop = unsafe { spa_sys::spa_pod_prop_first(addr_of!(object.0.body)) };
+
+        Self {
+            object,
+            next: first_prop,
+        }
+    }
+}
+
+impl<'o> Iterator for PodObjectIter<'o> {
+    type Item = &'o PodProp;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        // Check if the iterator has at least one element left that we can return
+        let has_next = unsafe {
+            spa_sys::spa_pod_prop_is_inside(
+                addr_of!(self.object.0.body),
+                self.object.0.pod.size,
+                self.next,
+            )
+        };
+
+        if has_next {
+            let res = unsafe { PodProp::from_raw(self.next.cast_const()) };
+
+            // Advance iter to next property
+            self.next = unsafe { spa_sys::spa_pod_prop_next(self.next) };
+
+            Some(res)
+        } else {
+            None
+        }
+    }
+}
+
+/// A transparent wrapper around a `spa_sys::spa_pod_prop`.
+#[repr(transparent)]
+pub struct PodProp(spa_sys::spa_pod_prop);
+
+impl PodProp {
+    /// # Safety
+    ///
+    /// The provided pointer must point to a valid, well-aligned [`spa_sys::spa_pod_prop`].
+    ///
+    /// While this struct doesn't represent a full pod, all restrictions from [`Pod::from_raw`] also apply
+    /// to this struct and the contained `value` pod.
+    pub unsafe fn from_raw(prop: *const spa_sys::spa_pod_prop) -> &'static Self {
+        prop.cast::<Self>().as_ref().unwrap()
+    }
+
+    /// # Safety
+    ///
+    /// The provided pointer must point to a valid, well-aligned pod of type object.
+    ///
+    /// While this struct doesn't represent a full pod, all restrictions from [`Pod::from_raw`] also apply
+    /// to this struct and the contained `value` pod.
+    pub unsafe fn from_raw_mut(prop: *mut spa_sys::spa_pod_prop) -> &'static mut Self {
+        prop.cast::<Self>().as_mut().unwrap()
+    }
+
+    pub fn as_raw_ptr(&self) -> *mut spa_sys::spa_pod_prop {
+        std::ptr::addr_of!(self.0).cast_mut()
+    }
+
+    pub fn key(&self) -> Id {
+        Id(self.0.key)
+    }
+
+    pub fn flags(&self) -> u32 {
+        self.0.flags
+    }
+
+    pub fn value(&self) -> &Pod {
+        // Safety: Since PodProp may only be constructed around valid Pods, the contained value must also be valid.
+        //         We don't mutate the pod and neither can the returned reference.
+        //         The returned lifetime is properly shortened by this methods signature.
+        unsafe { Pod::from_raw(addr_of!(self.0.value)) }
     }
 }
 
