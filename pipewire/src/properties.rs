@@ -154,6 +154,31 @@ impl Clone for Properties {
     }
 }
 
+impl<K, V> Extend<(K, V)> for Properties
+where
+    K: Into<Vec<u8>>,
+    V: Into<Vec<u8>>,
+{
+    fn extend<T: IntoIterator<Item = (K, V)>>(&mut self, iter: T) {
+        for (k, v) in iter {
+            self.insert(k, v);
+        }
+    }
+}
+
+impl<K, V> FromIterator<(K, V)> for Properties
+where
+    K: Into<Vec<u8>>,
+    V: Into<Vec<u8>>,
+{
+    fn from_iter<T: IntoIterator<Item = (K, V)>>(iter: T) -> Self {
+        let mut props = Self::new();
+        props.extend(iter);
+
+        props
+    }
+}
+
 impl Drop for Properties {
     fn drop(&mut self) {
         unsafe { pw_sys::pw_properties_free(self.ptr.as_ptr()) }
