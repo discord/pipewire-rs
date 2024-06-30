@@ -418,7 +418,7 @@ unsafe impl Sync for StaticDict {}
 mod tests {
     use super::{DictRef, Flags, StaticDict};
     use spa_sys::spa_dict;
-    use std::{ffi::CString, ptr};
+    use std::ptr;
 
     #[test]
     fn test_empty_dict() {
@@ -444,20 +444,8 @@ mod tests {
         };
 
         let mut iter = dict.iter_cstr();
-        assert_eq!(
-            (
-                CString::new("K0").unwrap().as_c_str(),
-                CString::new("V0").unwrap().as_c_str()
-            ),
-            iter.next().unwrap()
-        );
-        assert_eq!(
-            (
-                CString::new("K1").unwrap().as_c_str(),
-                CString::new("V1").unwrap().as_c_str()
-            ),
-            iter.next().unwrap()
-        );
+        assert_eq!((c"K0", c"V0"), iter.next().unwrap());
+        assert_eq!((c"K1", c"V1"), iter.next().unwrap());
         assert_eq!(None, iter.next());
     }
 

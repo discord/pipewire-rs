@@ -101,9 +101,7 @@ mod test {
             let type_info = super::spa_debug_type_find(spa_type_media_type, SPA_MEDIA_TYPE_audio);
             assert_eq!(
                 ffi::CStr::from_ptr((*type_info).name),
-                ffi::CString::new("Spa:Enum:MediaType:audio")
-                    .unwrap()
-                    .as_ref()
+                c"Spa:Enum:MediaType:audio"
             );
         }
     }
@@ -112,12 +110,7 @@ mod test {
     fn test_libspa_rs_debug_type_find_name() {
         unsafe {
             let name = super::spa_debug_type_find_name(spa_type_media_type, SPA_MEDIA_TYPE_audio);
-            assert_eq!(
-                ffi::CStr::from_ptr(name),
-                ffi::CString::new("Spa:Enum:MediaType:audio")
-                    .unwrap()
-                    .as_ref()
-            );
+            assert_eq!(ffi::CStr::from_ptr(name), c"Spa:Enum:MediaType:audio");
         }
     }
 
@@ -126,10 +119,7 @@ mod test {
         unsafe {
             let name =
                 super::spa_debug_type_find_short_name(spa_type_media_type, SPA_MEDIA_TYPE_audio);
-            assert_eq!(
-                ffi::CStr::from_ptr(name),
-                ffi::CString::new("audio").unwrap().as_ref()
-            );
+            assert_eq!(ffi::CStr::from_ptr(name), c"audio");
         }
     }
 }
