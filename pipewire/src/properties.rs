@@ -154,18 +154,6 @@ impl Clone for Properties {
     }
 }
 
-impl<K, V> Extend<(K, V)> for Properties
-where
-    K: Into<Vec<u8>>,
-    V: Into<Vec<u8>>,
-{
-    fn extend<T: IntoIterator<Item = (K, V)>>(&mut self, iter: T) {
-        for (k, v) in iter {
-            self.insert(k, v);
-        }
-    }
-}
-
 impl<K, V> FromIterator<(K, V)> for Properties
 where
     K: Into<Vec<u8>>,
@@ -277,6 +265,18 @@ impl fmt::Debug for PropertiesRef {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // FIXME: Debug-print dict key and values directly
         f.debug_tuple("PropertiesRef").field(self.as_ref()).finish()
+    }
+}
+
+impl<K, V> Extend<(K, V)> for PropertiesRef
+where
+    K: Into<Vec<u8>>,
+    V: Into<Vec<u8>>,
+{
+    fn extend<T: IntoIterator<Item = (K, V)>>(&mut self, iter: T) {
+        for (k, v) in iter {
+            self.insert(k, v);
+        }
     }
 }
 
