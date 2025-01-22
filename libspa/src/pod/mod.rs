@@ -170,7 +170,7 @@ impl Pod {
             if res >= 0 {
                 Ok(b.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -188,7 +188,7 @@ impl Pod {
             if res >= 0 {
                 Ok(Id(id.assume_init()))
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -206,7 +206,7 @@ impl Pod {
             if res >= 0 {
                 Ok(int.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -224,7 +224,7 @@ impl Pod {
             if res >= 0 {
                 Ok(long.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -242,7 +242,7 @@ impl Pod {
             if res >= 0 {
                 Ok(float.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -260,7 +260,7 @@ impl Pod {
             if res >= 0 {
                 Ok(double.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -290,7 +290,7 @@ impl Pod {
                 let bytes = std::slice::from_raw_parts(bytes.cast(), len.try_into().unwrap());
                 Ok(bytes)
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -315,7 +315,7 @@ impl Pod {
                 let pointer = pointer.assume_init();
                 Ok((pointer, _type))
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -335,7 +335,7 @@ impl Pod {
                 let fd: RawFd = fd.try_into().unwrap();
                 Ok(fd)
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -353,7 +353,7 @@ impl Pod {
             if res >= 0 {
                 Ok(rectangle.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -371,7 +371,7 @@ impl Pod {
             if res >= 0 {
                 Ok(fraction.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }

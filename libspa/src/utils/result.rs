@@ -133,7 +133,7 @@ impl Error {
     fn new(e: i32) -> Self {
         assert!(e > 0);
 
-        Self(Errno::from_i32(e))
+        Self(Errno::from_raw(e))
     }
 }
 

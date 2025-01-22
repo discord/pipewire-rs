@@ -141,7 +141,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -163,7 +163,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -177,7 +177,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -189,7 +189,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -201,7 +201,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -213,7 +213,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -225,7 +225,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -237,7 +237,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -256,7 +256,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -274,7 +274,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -290,7 +290,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -302,7 +302,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -314,7 +314,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -326,7 +326,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -344,7 +344,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -370,7 +370,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -394,7 +394,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -412,7 +412,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -438,7 +438,7 @@ impl<'d> Builder<'d> {
             if res >= 0 {
                 Ok(())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -449,7 +449,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -468,7 +468,7 @@ impl<'d> Builder<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 

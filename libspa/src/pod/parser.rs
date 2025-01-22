@@ -134,7 +134,7 @@ impl<'d> Parser<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -145,7 +145,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(b.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -157,7 +157,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(Id(id.assume_init()))
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -169,7 +169,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(int.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -181,7 +181,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(long.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -193,7 +193,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(float.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -205,7 +205,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(double.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -220,7 +220,7 @@ impl<'d> Parser<'d> {
                 let string = CStr::from_ptr(string);
                 Ok(string)
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -241,7 +241,7 @@ impl<'d> Parser<'d> {
                 let bytes = std::slice::from_raw_parts(bytes, len.try_into().unwrap());
                 Ok(bytes)
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -258,7 +258,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok((ptr.assume_init(), Id(type_.assume_init())))
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -270,7 +270,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(fd.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -282,7 +282,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(rect.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -294,7 +294,7 @@ impl<'d> Parser<'d> {
             if res >= 0 {
                 Ok(frac.assume_init())
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -311,7 +311,7 @@ impl<'d> Parser<'d> {
 
                 Ok(pod)
             } else {
-                Err(Errno::from_i32(-res))
+                Err(Errno::from_raw(-res))
             }
         }
     }
@@ -329,7 +329,7 @@ impl<'d> Parser<'d> {
         if res >= 0 {
             Ok(())
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 
@@ -353,7 +353,7 @@ impl<'d> Parser<'d> {
         if res >= 0 {
             Ok(Id(id.assume_init()))
         } else {
-            Err(Errno::from_i32(-res))
+            Err(Errno::from_raw(-res))
         }
     }
 }
