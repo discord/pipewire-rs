@@ -89,7 +89,11 @@ impl<T: 'static> Receiver<T> {
         F: Fn(T) + 'static,
     {
         let channel = self.channel.clone();
-        let readfd = channel.lock().expect("Channel mutex lock poisoned").readfd;
+        let readfd = channel
+            .lock()
+            .expect("Channel mutex lock poisoned")
+            .readfd
+            .as_raw_fd();
 
         // Attach the pipe as an IO source to the loop.
         // Whenever the pipe is written to, call the users callback with each message in the queue.
@@ -97,7 +101,7 @@ impl<T: 'static> Receiver<T> {
             let mut channel = channel.lock().expect("Channel mutex lock poisoned");
 
             // Read from the pipe to make it block until written to again.
-            let _ = nix::unistd::read(channel.readfd, &mut [0]);
+            let _ = nix::unistd::read(channel.readfd.as_raw_fd(), &mut [0]);
 
             channel.queue.drain(..).for_each(&callback);
         });
@@ -162,7 +166,7 @@ impl<T> Sender<T> {
         // If no messages are waiting already, signal the receiver to read some.
         // Because the channel mutex is locked, it is alright to do this before pushing the message.
         if channel.queue.is_empty() {
-            match nix::unistd::write(channel.writefd, &[1u8]) {
+            match nix::unistd::write(&channel.writefd, &[1u8]) {
                 Ok(_) => (),
                 Err(_) => return Err(t),
             }
@@ -178,19 +182,10 @@ impl<T> Sender<T> {
 /// Shared state between the [`Sender`]s and the [`Receiver`].
 struct Channel<T> {
     /// A pipe used to signal the loop the receiver is attached to that messages are waiting.
-    readfd: RawFd,
-    writefd: RawFd,
+    readfd: OwnedFd,
+    writefd: OwnedFd,
     /// Queue of any messages waiting to be received.
     queue: VecDeque<T>,
-}
-
-impl<T> Drop for Channel<T> {
-    fn drop(&mut self) {
-        // We do not error check here, because the pipe does not contain any data that might be lost,
-        // and because there is no way to handle an error in a `Drop` implementation anyways.
-        let _ = nix::unistd::close(self.readfd);
-        let _ = nix::unistd::close(self.writefd);
-    }
 }
 
 /// Create a Sender-Receiver pair, where the sender can be used to send messages to the receiver.
