@@ -34,7 +34,7 @@ fn async_seq(res: i32) -> i32 {
 
 fn is_async(val: i32) -> bool {
     let bit: i32 = spa_sys::SPA_ASYNC_BIT.try_into().unwrap();
-    (val & spa_sys::SPA_ASYNC_MASK) == bit
+    (val & (spa_sys::SPA_ASYNC_MASK as i32)) == bit
 }
 
 impl AsyncSeq {
