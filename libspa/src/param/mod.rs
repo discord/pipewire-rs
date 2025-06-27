@@ -47,8 +47,10 @@ impl ParamType {
     pub const Route: Self = Self(spa_sys::SPA_PARAM_Route);
     /// Control parameter, a SPA_TYPE_Sequence
     pub const Control: Self = Self(spa_sys::SPA_PARAM_Control);
+    #[cfg(feature = "v0_3_32")]
     /// latency reporting, a SPA_TYPE_OBJECT_ParamLatency
     pub const Latency: Self = Self(spa_sys::SPA_PARAM_Latency);
+    #[cfg(feature = "v0_3_32")]
     /// processing latency, a SPA_TYPE_OBJECT_ParamProcessLatency
     pub const ProcessLatency: Self = Self(spa_sys::SPA_PARAM_ProcessLatency);
 

@@ -10,6 +10,7 @@ bitflags! {
         const R = pw_sys::PW_PERM_R;
         const W = pw_sys::PW_PERM_W;
         const X = pw_sys::PW_PERM_X;
+        #[cfg(feature = "v0_3_32")]
         const M = pw_sys::PW_PERM_M;
         #[cfg(feature = "v0_3_77")]
         const L = pw_sys::PW_PERM_L;
