@@ -1,7 +1,7 @@
 // Copyright The pipewire-rs Contributors.
 // SPDX-License-Identifier: MIT
 
-use std::{convert::TryFrom, fmt::Debug};
+use std::{convert::TryFrom, fmt::Debug, os::fd::RawFd};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct DataType(spa_sys::spa_data_type);
@@ -73,7 +73,11 @@ impl Data {
         DataFlags::from_bits_retain(self.0.flags)
     }
 
-    // FIXME: Add bindings for the fd field, but how to detect when it is not set / invalid?
+    pub fn fd(&self) -> RawFd {
+        // We don't have a reliable way of checking if the fd is invalid or uninitialized, so we just return it as a RawFd.
+        // The client side will need to use unsafe if they want to manipulate the file descriptor.
+        self.0.fd as RawFd
+    }
 
     pub fn data(&mut self) -> Option<&mut [u8]> {
         // FIXME: For safety, perhaps only return a non-mut slice when DataFlags::WRITABLE is not set?
@@ -111,7 +115,7 @@ impl Debug for Data {
         f.debug_struct("Data")
             .field("type", &self.type_())
             .field("flags", &self.flags())
-            // FIXME: Add fd
+            .field("fd", &self.fd())
             .field("data", &self.0.data) // Only print the pointer here, as we don't want to print a (potentially very big) slice.
             .field("chunk", &self.chunk())
             .finish()
