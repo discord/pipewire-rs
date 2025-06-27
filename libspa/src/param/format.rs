@@ -62,8 +62,10 @@ impl MediaSubtype {
     pub const Unknown: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_unknown);
     pub const Raw: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_raw);
     pub const Dsp: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_dsp);
+    #[cfg(feature = "v0_3_32")]
     /// S/PDIF
     pub const Iec958: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_iec958);
+    #[cfg(feature = "v0_3_32")]
     pub const Dsd: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_dsd);
 
     pub const Mp3: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_mp3);
@@ -193,11 +195,14 @@ impl FormatProperties {
     /// channel positions (Id enum spa_audio_position)
     pub const AudioPosition: Self = Self(spa_sys::SPA_FORMAT_AUDIO_position);
 
+    #[cfg(feature = "v0_3_32")]
     /// codec used (IEC958) (Id enum spa_audio_iec958_codec)
     pub const AudioIec958Codec: Self = Self(spa_sys::SPA_FORMAT_AUDIO_iec958Codec);
 
+    #[cfg(feature = "v0_3_32")]
     /// bit order (Id enum spa_param_bitorder)
     pub const AudioBitorder: Self = Self(spa_sys::SPA_FORMAT_AUDIO_bitorder);
+    #[cfg(feature = "v0_3_32")]
     /// Interleave bytes (Int)
     pub const AudioInterleave: Self = Self(spa_sys::SPA_FORMAT_AUDIO_interleave);
     /// bit rate (Int)

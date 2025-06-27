@@ -99,20 +99,28 @@ impl VideoFormat {
     pub const RGBA_F16: Self = Self(spa_sys::SPA_VIDEO_FORMAT_RGBA_F16);
     pub const RGBA_F32: Self = Self(spa_sys::SPA_VIDEO_FORMAT_RGBA_F32);
 
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit x:R:G:B 2:10:10:10 little endian
     pub const xRGB_210LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_xRGB_210LE);
+    #[cfg(feature = "v0_3_32")]
     ///32-bit x:B:G:R 2:10:10:10 little endian
     pub const xBGR_210LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_xBGR_210LE);
+    #[cfg(feature = "v0_3_32")]
     ///32-bit R:G:B:x 10:10:10:2 little endian
     pub const RGBx_102LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_RGBx_102LE);
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit B:G:R:x 10:10:10:2 little endian
     pub const BGRx_102LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_BGRx_102LE);
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit A:R:G:B 2:10:10:10 little endian
     pub const ARGB_210LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_ARGB_210LE);
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit A:B:G:R 2:10:10:10 little endian
     pub const ABGR_210LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_ABGR_210LE);
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit R:G:B:A 10:10:10:2 little endian
     pub const RGBA_102LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_RGBA_102LE);
+    #[cfg(feature = "v0_3_32")]
     /// 32-bit B:G:R:A 10:10:10:2 little endian
     pub const BGRA_102LE: Self = Self(spa_sys::SPA_VIDEO_FORMAT_BGRA_102LE);
 
@@ -228,6 +236,7 @@ impl VideoInfoRaw {
     pub fn new() -> Self {
         Self(spa_sys::spa_video_info_raw {
             format: VideoFormat::Unknown.as_raw(),
+            #[cfg(feature = "v0_3_32")]
             flags: 0,
             modifier: 0,
             size: Rectangle {
@@ -257,10 +266,12 @@ impl VideoInfoRaw {
         VideoFormat::from_raw(self.0.format)
     }
 
+    #[cfg(feature = "v0_3_32")]
     pub fn set_flags(&mut self, flags: VideoFlags) {
         self.0.flags = flags.bits();
     }
 
+    #[cfg(feature = "v0_3_32")]
     pub fn flags(self) -> VideoFlags {
         VideoFlags::from_bits_retain(self.0.flags)
     }
@@ -407,9 +418,13 @@ impl Debug for VideoInfoRaw {
         #[cfg(not(feature = "v0_3_65"))]
         let interlace_mode = self.interlace_mode().as_raw();
 
-        f.debug_struct("VideoInfoRaw")
-            .field("format", &self.format())
-            .field("flags", &self.flags())
+        let mut debug_struct = f.debug_struct("VideoInfoRaw");
+        debug_struct.field("format", &self.format());
+
+        #[cfg(feature = "v0_3_32")]
+        debug_struct.field("flags", &self.flags());
+
+        debug_struct
             .field("modifier", &self.modifier())
             .field("size", &self.size())
             .field("framerate", &self.framerate())

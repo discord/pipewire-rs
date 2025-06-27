@@ -33,6 +33,7 @@ key_constant!(PROTOCOL, PW_KEY_PROTOCOL,
 key_constant!(ACCESS, PW_KEY_ACCESS,
     /// how the client access is controlled
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(CLIENT_ACCESS, PW_KEY_CLIENT_ACCESS,
     /// how the client wants to be access controlled Must be obtained from trusted sources by the protocol and placed as read-only properties.
 );
@@ -74,9 +75,11 @@ key_constant!(OBJECT_LINGER, PW_KEY_OBJECT_LINGER,
 key_constant!(OBJECT_REGISTER, PW_KEY_OBJECT_REGISTER,
     /// If the object should be registered.
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(CONFIG_PREFIX, PW_KEY_CONFIG_PREFIX,
     /// a config prefix directory
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(CONFIG_NAME, PW_KEY_CONFIG_NAME,
     /// a config file name
 );
@@ -121,6 +124,7 @@ key_constant!(CPU_CORES, PW_KEY_CPU_CORES,
 key_constant!(PRIORITY_SESSION, PW_KEY_PRIORITY_SESSION,
     /// priority in session manager
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(PRIORITY_DRIVER, PW_KEY_PRIORITY_DRIVER,
     /// priority to be a driver
 );
@@ -196,6 +200,7 @@ key_constant!(NODE_PLUGGED, PW_KEY_NODE_PLUGGED,
 key_constant!(NODE_SESSION, PW_KEY_NODE_SESSION,
     /// the session id this node is part of
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(NODE_GROUP, PW_KEY_NODE_GROUP,
     /// the group id this node is part of. Nodes in the same group are always scheduled with the same driver.
 );
@@ -208,6 +213,7 @@ key_constant!(NODE_AUTOCONNECT, PW_KEY_NODE_AUTOCONNECT,
 key_constant!(NODE_LATENCY, PW_KEY_NODE_LATENCY,
     /// the requested latency of the node as a fraction. Ex: 128/48000
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(NODE_MAX_LATENCY, PW_KEY_NODE_MAX_LATENCY,
     /// the maximum supported latency of the node as a fraction. Ex: 1024/48000
 );
@@ -248,6 +254,7 @@ key_constant!(NODE_PAUSE_ON_IDLE, PW_KEY_NODE_PAUSE_ON_IDLE,
 key_constant!(NODE_SUSPEND_ON_IDLE, PW_KEY_NODE_SUSPEND_ON_IDLE,
     /// suspend the node when idle
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(NODE_CACHE_PARAMS, PW_KEY_NODE_CACHE_PARAMS,
     /// cache the node params
 );
@@ -261,9 +268,11 @@ key_constant!(NODE_DRIVER, PW_KEY_NODE_DRIVER,
 key_constant!(NODE_STREAM, PW_KEY_NODE_STREAM,
     /// node is a stream, the server side should add a converter
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(NODE_VIRTUAL, PW_KEY_NODE_VIRTUAL,
     /// the node is some sort of virtual object
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(NODE_PASSIVE, PW_KEY_NODE_PASSIVE,
     /// indicate that a node wants passive links on output/input/all ports when the value is "out"/"in"/"true" respectively
 );
@@ -307,9 +316,11 @@ key_constant!(PORT_CONTROL, PW_KEY_PORT_CONTROL,
 key_constant!(PORT_MONITOR, PW_KEY_PORT_MONITOR,
     /// if this port is a monitor port
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(PORT_CACHE_PARAMS, PW_KEY_PORT_CACHE_PARAMS,
     /// cache the node port params
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(PORT_EXTRA, PW_KEY_PORT_EXTRA,
     /// api specific extra port info, API name should be prefixed. "jack:flags:56"
 );
@@ -331,6 +342,7 @@ key_constant!(LINK_OUTPUT_PORT, PW_KEY_LINK_OUTPUT_PORT,
 key_constant!(LINK_PASSIVE, PW_KEY_LINK_PASSIVE,
     /// indicate that a link is passive and does not cause the graph to be runnable.
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(LINK_FEEDBACK, PW_KEY_LINK_FEEDBACK,
     /// indicate that a link is a feedback link and the target will receive data in the next cycle
 );
@@ -398,6 +410,7 @@ key_constant!(DEVICE_ICON_NAME, PW_KEY_DEVICE_ICON_NAME,
 key_constant!(DEVICE_INTENDED_ROLES, PW_KEY_DEVICE_INTENDED_ROLES,
     /// intended use. A space separated list of roles (see PW_KEY_MEDIA_ROLE) this device is particularly well suited for, due to latency, quality or form factor.
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(DEVICE_CACHE_PARAMS, PW_KEY_DEVICE_CACHE_PARAMS,
     /// cache the device spa params
 );
@@ -446,9 +459,11 @@ key_constant!(STREAM_LATENCY_MAX, PW_KEY_STREAM_LATENCY_MAX,
 key_constant!(STREAM_MONITOR, PW_KEY_STREAM_MONITOR,
     /// Indicates that the stream is monitoring and might select a less accurate but faster conversion algorithm.
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(STREAM_DONT_REMIX, PW_KEY_STREAM_DONT_REMIX,
     /// don't remix channels
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(STREAM_CAPTURE_SINK, PW_KEY_STREAM_CAPTURE_SINK,
     /// Try to capture the sink output instead of source output
 );
@@ -491,12 +506,15 @@ key_constant!(MEDIA_ICON, PW_KEY_MEDIA_ICON,
 key_constant!(MEDIA_ICON_NAME, PW_KEY_MEDIA_ICON_NAME,
     /// an XDG icon name for the media. Ex: "audio-x-mp3"
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(MEDIA_COMMENT, PW_KEY_MEDIA_COMMENT,
     /// extra comment
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(MEDIA_DATE, PW_KEY_MEDIA_DATE,
     /// date of the media
 );
+#[cfg(feature = "v0_3_32")]
 key_constant!(MEDIA_FORMAT, PW_KEY_MEDIA_FORMAT,
     /// format of the media
 );
