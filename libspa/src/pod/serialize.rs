@@ -498,7 +498,7 @@ impl<O: Write + Seek> PodSerializer<O> {
         written += match ptr_size {
             4 => self.gen(ne_u32(ptr as u32))?,
             8 => self.gen(ne_u64(ptr as u64))?,
-            _ => panic!("unsupported pointer size {}", ptr_size),
+            _ => panic!("unsupported pointer size {ptr_size}"),
         };
 
         Ok(SerializeSuccess {

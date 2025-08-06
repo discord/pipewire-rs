@@ -172,7 +172,7 @@ impl NodeInfoRef {
             pw_sys::pw_node_state_PW_NODE_STATE_SUSPENDED => NodeState::Suspended,
             pw_sys::pw_node_state_PW_NODE_STATE_IDLE => NodeState::Idle,
             pw_sys::pw_node_state_PW_NODE_STATE_RUNNING => NodeState::Running,
-            _ => panic!("Invalid node state: {}", raw_state),
+            _ => panic!("Invalid node state: {raw_state}"),
         }
     }
 

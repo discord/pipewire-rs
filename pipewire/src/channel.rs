@@ -101,7 +101,7 @@ impl<T: 'static> Receiver<T> {
             let mut channel = channel.lock().expect("Channel mutex lock poisoned");
 
             // Read from the pipe to make it block until written to again.
-            let _ = nix::unistd::read(channel.readfd.as_raw_fd(), &mut [0]);
+            let _ = nix::unistd::read(&channel.readfd, &mut [0]);
 
             channel.queue.drain(..).for_each(&callback);
         });

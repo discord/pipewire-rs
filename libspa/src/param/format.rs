@@ -84,7 +84,7 @@ impl MediaSubtype {
     pub const Flac: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_flac);
     #[cfg(feature = "v0_3_65")]
     pub const Ape: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_ape);
-    #[cfg(feature = "v0_3_68")]
+    #[cfg(feature = "v0_3_65")]
     pub const Opus: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_opus);
 
     pub const H264: Self = Self(spa_sys::SPA_MEDIA_SUBTYPE_h264);

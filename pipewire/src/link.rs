@@ -183,7 +183,7 @@ impl LinkInfoRef {
             pw_sys::pw_link_state_PW_LINK_STATE_ALLOCATING => LinkState::Allocating,
             pw_sys::pw_link_state_PW_LINK_STATE_PAUSED => LinkState::Paused,
             pw_sys::pw_link_state_PW_LINK_STATE_ACTIVE => LinkState::Active,
-            _ => panic!("Invalid link state: {}", raw_state),
+            _ => panic!("Invalid link state: {raw_state}"),
         }
     }
 
