@@ -63,5 +63,8 @@ fn main() {
     #[cfg(feature = "v0_3_65")]
     cc.define("FEATURE_0_3_65", "1");
 
+    #[cfg(feature = "v0_3_32")]
+    cc.define("FEATURE_0_3_32", "1");
+
     cc.compile("libspa-rs-reexports");
 }

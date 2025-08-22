@@ -131,7 +131,9 @@ impl SpaTypes {
     pub const ObjectParamPortConfig: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamPortConfig);
     pub const ObjectParamRoute: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamRoute);
     pub const ObjectProfiler: Self = Self(spa_sys::SPA_TYPE_OBJECT_Profiler);
+    #[cfg(feature = "v0_3_32")]
     pub const ObjectParamLatency: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamLatency);
+    #[cfg(feature = "v0_3_32")]
     pub const ObjectParamProcessLatency: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamProcessLatency);
 
     /* vendor extensions */
