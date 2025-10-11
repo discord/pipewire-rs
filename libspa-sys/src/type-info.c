@@ -9,7 +9,7 @@ const struct spa_type_info* libspa_rs_type_direction = spa_type_direction;
 const struct spa_type_info* libspa_rs_type_choice = spa_type_choice;
 
 // spa/monitor
-#if PW_CHECK_VERSION(0, 3, 32)
+#if PW_CHECK_VERSION(0,3,32)
 const struct spa_type_info* libspa_rs_type_device_event_id = spa_type_device_event_id;
 const struct spa_type_info* libspa_rs_type_device_event = spa_type_device_event;
 #endif
