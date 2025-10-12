@@ -236,7 +236,7 @@ impl VideoInfoRaw {
     pub fn new() -> Self {
         Self(spa_sys::spa_video_info_raw {
             format: VideoFormat::Unknown.as_raw(),
-            #[cfg(feature = "v0_3_32")]
+            #[cfg(libpipewire_0_3_65_or_higher)]
             flags: 0,
             modifier: 0,
             size: Rectangle {
@@ -266,12 +266,12 @@ impl VideoInfoRaw {
         VideoFormat::from_raw(self.0.format)
     }
 
-    #[cfg(feature = "v0_3_32")]
+    #[cfg(libpipewire_0_3_65_or_higher)]
     pub fn set_flags(&mut self, flags: VideoFlags) {
         self.0.flags = flags.bits();
     }
 
-    #[cfg(feature = "v0_3_32")]
+    #[cfg(libpipewire_0_3_65_or_higher)]
     pub fn flags(self) -> VideoFlags {
         VideoFlags::from_bits_retain(self.0.flags)
     }
@@ -421,7 +421,7 @@ impl Debug for VideoInfoRaw {
         let mut debug_struct = f.debug_struct("VideoInfoRaw");
         debug_struct.field("format", &self.format());
 
-        #[cfg(feature = "v0_3_32")]
+        #[cfg(libpipewire_0_3_65_or_higher)]
         debug_struct.field("flags", &self.flags());
 
         debug_struct

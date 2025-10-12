@@ -81,10 +81,10 @@ extern "C" {
     pub static spa_type_bluetooth_audio_codec: *const spa_type_info;
     #[link_name = "libspa_rs_type_video_format"]
     pub static spa_type_video_format: *const spa_type_info;
-    #[cfg(feature = "v0_3_65")]
+    #[cfg(libpipewire_0_3_65_or_higher)]
     #[link_name = "libspa_rs_type_video_flags"]
     pub static spa_type_video_flags: *const spa_type_info;
-    #[cfg(feature = "v0_3_65")]
+    #[cfg(libpipewire_0_3_65_or_higher)]
     #[link_name = "libspa_rs_type_video_interlace_mode"]
     pub static spa_type_video_interlace_mode: *const spa_type_info;
 }
