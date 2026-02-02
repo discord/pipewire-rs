@@ -13,6 +13,7 @@ use std::{ffi::CStr, fmt::Debug, os::raw::c_uint};
 
 pub use spa_sys::spa_fraction as Fraction;
 pub use spa_sys::spa_rectangle as Rectangle;
+pub use spa_sys::spa_region as Region;
 
 use crate::pod::CanonicalFixedSizedPod;
 

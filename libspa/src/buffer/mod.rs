@@ -1,6 +1,9 @@
 // Copyright The pipewire-rs Contributors.
 // SPDX-License-Identifier: MIT
 
+mod meta;
+pub use meta::*;
+
 use std::{convert::TryFrom, fmt::Debug, os::fd::RawFd};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
@@ -17,6 +20,9 @@ impl DataType {
     pub const DmaBuf: Self = Self(spa_sys::SPA_DATA_DmaBuf);
     /// Memory is identified with an id
     pub const MemId: Self = Self(spa_sys::SPA_DATA_MemId);
+    #[cfg(feature = "v1_0_8")]
+    /// A syncobj, usually requires a spa_meta_sync_timeline metadata with timeline points
+    pub const SyncObj: Self = Self(spa_sys::SPA_DATA_SyncObj);
 
     pub fn from_raw(raw: spa_sys::spa_data_type) -> Self {
         Self(raw)
@@ -37,6 +43,8 @@ impl std::fmt::Debug for DataType {
                 Self::MemFd => "MemFd",
                 Self::DmaBuf => "DmaBuf",
                 Self::MemId => "MemId",
+                #[cfg(feature = "v1_0_8")]
+                Self::SyncObj => "SyncObj",
                 _ => "Unknown",
             }
         );
