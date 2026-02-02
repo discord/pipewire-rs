@@ -17,7 +17,10 @@ keywords = ["ffi", "pipewire", "multimedia", "audio", "video"]
 [dependencies]
 
 [build-dependencies]
-bindgen = { version = "0.72.0", default-features = false, features = ["experimental", "runtime"] }
+bindgen = { version = "0.72.0", default-features = false, features = [
+    "experimental",
+    "runtime",
+] }
 cc = "1.0"
 system-deps = "7.0.5"
 
@@ -30,3 +33,4 @@ doctest = false # https://github.com/rust-lang/rust-bindgen/issues/1313
 
 [features]
 v0_3_65 = []
+v1_5_81 = ["v0_3_65"]

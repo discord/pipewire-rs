@@ -64,3 +64,9 @@ const struct spa_type_info* libspa_rs_type_video_format = spa_type_video_format;
 const struct spa_type_info* libspa_rs_type_video_flags = spa_type_video_flags;
 const struct spa_type_info* libspa_rs_type_video_interlace_mode = spa_type_video_interlace_mode;
 #endif
+#if PW_CHECK_VERSION(1,5,81)
+const struct spa_type_info* libspa_rs_type_video_color_range = spa_type_video_color_range;
+const struct spa_type_info* libspa_rs_type_video_color_matrix = spa_type_video_color_matrix;
+const struct spa_type_info* libspa_rs_type_video_transfer_function = spa_type_video_transfer_function;
+const struct spa_type_info* libspa_rs_type_video_color_primaries = spa_type_video_color_primaries;
+#endif

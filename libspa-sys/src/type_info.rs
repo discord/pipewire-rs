@@ -87,6 +87,18 @@ extern "C" {
     #[cfg(feature = "v0_3_65")]
     #[link_name = "libspa_rs_type_video_interlace_mode"]
     pub static spa_type_video_interlace_mode: *const spa_type_info;
+    #[cfg(feature = "v1_5_81")]
+    #[link_name = "libspa_rs_type_video_color_range"]
+    pub static spa_type_video_color_range: *const spa_type_info;
+    #[cfg(feature = "v1_5_81")]
+    #[link_name = "libspa_rs_type_video_color_matrix"]
+    pub static spa_type_video_color_matrix: *const spa_type_info;
+    #[cfg(feature = "v1_5_81")]
+    #[link_name = "libspa_rs_type_video_transfer_function"]
+    pub static spa_type_video_transfer_function: *const spa_type_info;
+    #[cfg(feature = "v1_5_81")]
+    #[link_name = "libspa_rs_type_video_color_primaries"]
+    pub static spa_type_video_color_primaries: *const spa_type_info;
 }
 
 #[cfg(test)]
