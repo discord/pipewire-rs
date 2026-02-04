@@ -22,7 +22,7 @@ impl MetaType {
     pub const Busy: Self = Self(spa_sys::SPA_META_Busy);
     #[cfg(feature = "v0_3_62")]
     pub const VideoTransform: Self = Self(spa_sys::SPA_META_VideoTransform);
-    #[cfg(feature = "v1_0_8")]
+    #[cfg(any(feature = "v1_0_8", feature = "discord"))]
     pub const SyncTimeline: Self = Self(spa_sys::SPA_META_SyncTimeline);
 
     pub fn from_raw(raw: spa_sys::spa_meta_type) -> Self {
@@ -46,7 +46,7 @@ impl MetaType {
             Self::VideoTransform => {
                 Some(std::mem::size_of::<spa_sys::spa_meta_videotransform>() as i32)
             }
-            #[cfg(feature = "v1_0_8")]
+            #[cfg(any(feature = "v1_0_8", feature = "discord"))]
             Self::SyncTimeline => {
                 Some(std::mem::size_of::<spa_sys::spa_meta_sync_timeline>() as i32)
             }
@@ -69,7 +69,7 @@ impl Debug for MetaType {
             Self::Busy => "MetaType::Busy",
             #[cfg(feature = "v0_3_62")]
             Self::VideoTransform => "MetaType::VideoTransform",
-            #[cfg(feature = "v1_0_8")]
+            #[cfg(any(feature = "v1_0_8", feature = "discord"))]
             Self::SyncTimeline => "MetaType::SyncTimeline",
             _ => "MetaType::Unknown",
         };
@@ -118,7 +118,7 @@ impl Debug for Meta {
     }
 }
 
-#[cfg(feature = "v1_0_8")]
+#[cfg(any(feature = "v1_0_8", feature = "discord"))]
 mod sync_timeline_impl {
     use super::*;
 
@@ -168,7 +168,7 @@ mod sync_timeline_impl {
     }
 }
 
-#[cfg(feature = "v1_0_8")]
+#[cfg(any(feature = "v1_0_8", feature = "discord"))]
 pub use sync_timeline_impl::MetaSyncTimeline;
 
 /// A region metadata, used for video crop and video damage.

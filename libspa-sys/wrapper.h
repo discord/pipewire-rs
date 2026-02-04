@@ -1,5 +1,9 @@
 #include <pipewire/version.h>
 
+#ifdef DISCORD_BACKFILLS
+#include "discord_backfills.h"
+#endif
+
 #include <spa/buffer/alloc.h>
 #include <spa/buffer/buffer.h>
 #include <spa/buffer/meta.h>

@@ -11,6 +11,7 @@ fn main() {
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=wrapper.h");
+    println!("cargo:rerun-if-changed=discord_backfills.h");
 
     // Write bindings files to the $OUT_DIR/ directory.
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -42,6 +43,12 @@ fn main() {
             let arg = format!("-I{}", l.to_string_lossy());
             builder.clang_arg(arg)
         });
+
+    let builder = if cfg!(feature = "discord") {
+        builder.clang_arg("-DDISCORD_BACKFILLS")
+    } else {
+        builder
+    };
 
     let bindings = builder.generate().expect("Unable to generate bindings");
 

@@ -20,7 +20,7 @@ impl DataType {
     pub const DmaBuf: Self = Self(spa_sys::SPA_DATA_DmaBuf);
     /// Memory is identified with an id
     pub const MemId: Self = Self(spa_sys::SPA_DATA_MemId);
-    #[cfg(feature = "v1_0_8")]
+    #[cfg(any(feature = "v1_0_8", feature = "discord"))]
     /// A syncobj, usually requires a spa_meta_sync_timeline metadata with timeline points
     pub const SyncObj: Self = Self(spa_sys::SPA_DATA_SyncObj);
 
@@ -43,7 +43,7 @@ impl std::fmt::Debug for DataType {
                 Self::MemFd => "MemFd",
                 Self::DmaBuf => "DmaBuf",
                 Self::MemId => "MemId",
-                #[cfg(feature = "v1_0_8")]
+                #[cfg(any(feature = "v1_0_8", feature = "discord"))]
                 Self::SyncObj => "SyncObj",
                 _ => "Unknown",
             }

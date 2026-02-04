@@ -154,7 +154,7 @@ impl ParamBuffersProperties {
     pub const Stride: Self = Self(spa_sys::SPA_PARAM_BUFFERS_stride);
     pub const Align: Self = Self(spa_sys::SPA_PARAM_BUFFERS_align);
     pub const DataType: Self = Self(spa_sys::SPA_PARAM_BUFFERS_dataType);
-    #[cfg(feature = "v1_0_8")]
+    #[cfg(any(feature = "v1_0_8", feature = "discord"))]
     pub const MetaType: Self = Self(spa_sys::SPA_PARAM_BUFFERS_metaType);
 
     pub fn from_raw(raw: spa_sys::spa_param_buffers) -> Self {
@@ -175,7 +175,7 @@ impl Debug for ParamBuffersProperties {
             Self::Stride => "ParamBuffersProperties::Stride",
             Self::Align => "ParamBuffersProperties::Align",
             Self::DataType => "ParamBuffersProperties::DataType",
-            #[cfg(feature = "v1_0_8")]
+            #[cfg(any(feature = "v1_0_8", feature = "discord"))]
             Self::MetaType => "ParamBuffersProperties::MetaType",
             _ => "ParamBuffersProperties::Unknown",
         };
