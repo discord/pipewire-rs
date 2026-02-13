@@ -13,6 +13,7 @@ use std::{ffi::CStr, fmt::Debug, os::raw::c_uint};
 
 pub use spa_sys::spa_fraction as Fraction;
 pub use spa_sys::spa_rectangle as Rectangle;
+pub use spa_sys::spa_region as Region;
 
 use crate::pod::CanonicalFixedSizedPod;
 
@@ -131,7 +132,9 @@ impl SpaTypes {
     pub const ObjectParamPortConfig: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamPortConfig);
     pub const ObjectParamRoute: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamRoute);
     pub const ObjectProfiler: Self = Self(spa_sys::SPA_TYPE_OBJECT_Profiler);
+    #[cfg(feature = "v0_3_32")]
     pub const ObjectParamLatency: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamLatency);
+    #[cfg(feature = "v0_3_32")]
     pub const ObjectParamProcessLatency: Self = Self(spa_sys::SPA_TYPE_OBJECT_ParamProcessLatency);
 
     /* vendor extensions */

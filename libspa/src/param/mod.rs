@@ -47,8 +47,10 @@ impl ParamType {
     pub const Route: Self = Self(spa_sys::SPA_PARAM_Route);
     /// Control parameter, a SPA_TYPE_Sequence
     pub const Control: Self = Self(spa_sys::SPA_PARAM_Control);
+    #[cfg(feature = "v0_3_32")]
     /// latency reporting, a SPA_TYPE_OBJECT_ParamLatency
     pub const Latency: Self = Self(spa_sys::SPA_PARAM_Latency);
+    #[cfg(feature = "v0_3_32")]
     /// processing latency, a SPA_TYPE_OBJECT_ParamProcessLatency
     pub const ProcessLatency: Self = Self(spa_sys::SPA_PARAM_ProcessLatency);
 
@@ -108,5 +110,75 @@ impl Debug for ParamInfo {
             .field("id", &self.id())
             .field("flags", &self.flags())
             .finish()
+    }
+}
+
+/// Properties for ParamMeta objects (used to request buffer metadata).
+#[derive(PartialEq, Eq, Clone, Copy)]
+pub struct ParamMetaProperties(spa_sys::spa_param_meta);
+
+#[allow(non_upper_case_globals)]
+impl ParamMetaProperties {
+    pub const Type: Self = Self(spa_sys::SPA_PARAM_META_type);
+    pub const Size: Self = Self(spa_sys::SPA_PARAM_META_size);
+
+    pub fn from_raw(raw: spa_sys::spa_param_meta) -> Self {
+        Self(raw)
+    }
+
+    pub fn as_raw(&self) -> spa_sys::spa_param_meta {
+        self.0
+    }
+}
+
+impl Debug for ParamMetaProperties {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let name = match *self {
+            Self::Type => "ParamMetaProperties::Type",
+            Self::Size => "ParamMetaProperties::Size",
+            _ => "ParamMetaProperties::Unknown",
+        };
+        f.write_str(name)
+    }
+}
+
+/// Properties for ParamBuffers objects (used to configure buffer parameters).
+#[derive(PartialEq, Eq, Clone, Copy)]
+pub struct ParamBuffersProperties(spa_sys::spa_param_buffers);
+
+#[allow(non_upper_case_globals)]
+impl ParamBuffersProperties {
+    pub const Buffers: Self = Self(spa_sys::SPA_PARAM_BUFFERS_buffers);
+    pub const Blocks: Self = Self(spa_sys::SPA_PARAM_BUFFERS_blocks);
+    pub const Size: Self = Self(spa_sys::SPA_PARAM_BUFFERS_size);
+    pub const Stride: Self = Self(spa_sys::SPA_PARAM_BUFFERS_stride);
+    pub const Align: Self = Self(spa_sys::SPA_PARAM_BUFFERS_align);
+    pub const DataType: Self = Self(spa_sys::SPA_PARAM_BUFFERS_dataType);
+    #[cfg(any(feature = "v1_0_8", feature = "discord"))]
+    pub const MetaType: Self = Self(spa_sys::SPA_PARAM_BUFFERS_metaType);
+
+    pub fn from_raw(raw: spa_sys::spa_param_buffers) -> Self {
+        Self(raw)
+    }
+
+    pub fn as_raw(&self) -> spa_sys::spa_param_buffers {
+        self.0
+    }
+}
+
+impl Debug for ParamBuffersProperties {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let name = match *self {
+            Self::Buffers => "ParamBuffersProperties::Buffers",
+            Self::Blocks => "ParamBuffersProperties::Blocks",
+            Self::Size => "ParamBuffersProperties::Size",
+            Self::Stride => "ParamBuffersProperties::Stride",
+            Self::Align => "ParamBuffersProperties::Align",
+            Self::DataType => "ParamBuffersProperties::DataType",
+            #[cfg(any(feature = "v1_0_8", feature = "discord"))]
+            Self::MetaType => "ParamBuffersProperties::MetaType",
+            _ => "ParamBuffersProperties::Unknown",
+        };
+        f.write_str(name)
     }
 }

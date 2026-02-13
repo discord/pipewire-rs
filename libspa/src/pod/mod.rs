@@ -663,8 +663,11 @@ bitflags! {
     pub struct PodPropFlags: u32 {
         const READONLY = spa_sys::SPA_POD_PROP_FLAG_READONLY;
         const HARDWARE = spa_sys::SPA_POD_PROP_FLAG_HARDWARE;
+        #[cfg(any(feature = "v0_3_32", feature = "discord"))]
         const HINT_DICT = spa_sys::SPA_POD_PROP_FLAG_HINT_DICT;
+        #[cfg(any(feature = "v0_3_32", feature = "discord"))]
         const MANDATORY = spa_sys::SPA_POD_PROP_FLAG_MANDATORY;
+        #[cfg(any(feature = "v0_3_32", feature = "discord"))]
         const DONT_FIXATE = spa_sys::SPA_POD_PROP_FLAG_DONT_FIXATE;
     }
 }
@@ -1461,12 +1464,14 @@ bitflags! {
         const READONLY = spa_sys::SPA_POD_PROP_FLAG_READONLY;
         /// Property is some sort of hardware parameter.
         const HARDWARE = spa_sys::SPA_POD_PROP_FLAG_HARDWARE;
+        #[cfg(any(feature = "v0_3_32", feature = "discord"))]
         /// Property contains a dictionary struct.
         const HINT_DICT = spa_sys::SPA_POD_PROP_FLAG_HINT_DICT;
+        #[cfg(any(feature = "v0_3_32", feature = "discord"))]
         /// Property is mandatory.
         const MANDATORY = spa_sys::SPA_POD_PROP_FLAG_MANDATORY;
         /// Property choices need no fixation.
-        #[cfg(feature = "v0_3_33")]
+        #[cfg(any(feature = "v0_3_33", feature = "discord"))]
         const DONT_FIXATE = spa_sys::SPA_POD_PROP_FLAG_DONT_FIXATE;
     }
 }

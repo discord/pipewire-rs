@@ -1,6 +1,9 @@
 use super::stream::Stream;
 
-use spa::buffer::Data;
+#[cfg(feature = "v1_0_8")]
+use spa::buffer::MetaSyncTimeline;
+use spa::buffer::{Data, Meta, MetaRegion, MetaType};
+
 use std::convert::TryFrom;
 use std::ptr::NonNull;
 
@@ -35,6 +38,32 @@ impl Buffer<'_> {
         };
 
         slice_of_data
+    }
+
+    pub fn metas_mut(&mut self) -> &mut [Meta] {
+        let buffer: *mut spa_sys::spa_buffer = unsafe { self.buf.as_ref().buffer };
+
+        if !buffer.is_null() && unsafe { (*buffer).n_metas > 0 && !(*buffer).metas.is_null() } {
+            unsafe {
+                let metas = (*buffer).metas as *mut Meta;
+                std::slice::from_raw_parts_mut(metas, usize::try_from((*buffer).n_metas).unwrap())
+            }
+        } else {
+            &mut []
+        }
+    }
+
+    pub fn find_meta_mut(&mut self, meta_type: MetaType) -> Option<&mut Meta> {
+        self.metas_mut().iter_mut().find(|m| m.type_() == meta_type)
+    }
+
+    pub fn video_crop(&mut self) -> Option<&MetaRegion> {
+        self.find_meta_mut(MetaType::VideoCrop)?.video_crop()
+    }
+
+    #[cfg(feature = "v1_0_8")]
+    pub fn sync_timeline(&mut self) -> Option<&MetaSyncTimeline> {
+        self.find_meta_mut(MetaType::SyncTimeline)?.sync_timeline()
     }
 
     #[cfg(feature = "v0_3_49")]

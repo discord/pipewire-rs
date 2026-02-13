@@ -48,7 +48,9 @@ impl AudioFormat {
     pub const F32BE: Self = Self(spa_sys::SPA_AUDIO_FORMAT_F32_BE);
     pub const F64LE: Self = Self(spa_sys::SPA_AUDIO_FORMAT_F64_LE);
     pub const F64BE: Self = Self(spa_sys::SPA_AUDIO_FORMAT_F64_BE);
+    #[cfg(feature = "v0_3_32")]
     pub const ULAW: Self = Self(spa_sys::SPA_AUDIO_FORMAT_ULAW);
+    #[cfg(feature = "v0_3_32")]
     pub const ALAW: Self = Self(spa_sys::SPA_AUDIO_FORMAT_ALAW);
 
     pub const S16: Self = Self(spa_sys::SPA_AUDIO_FORMAT_S16);
@@ -69,6 +71,7 @@ impl AudioFormat {
     pub const S24P: Self = Self(spa_sys::SPA_AUDIO_FORMAT_S24P);
     pub const F32P: Self = Self(spa_sys::SPA_AUDIO_FORMAT_F32P);
     pub const F64P: Self = Self(spa_sys::SPA_AUDIO_FORMAT_F64P);
+    #[cfg(feature = "v0_3_32")]
     pub const S8P: Self = Self(spa_sys::SPA_AUDIO_FORMAT_S8P);
 
     const INTERLEAVED_RANGE: Range<Self> = Self::S8..Self(spa_sys::SPA_AUDIO_FORMAT_START_Planar);
